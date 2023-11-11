@@ -5,6 +5,15 @@ from time import perf_counter
 timeStart = perf_counter()
 
 
+def Sort_check(lst):
+    """
+    >>> Sort_check([1,2,3,4,4])
+    True
+    >>> Sort_check([1,2,2,1])
+    False
+    """
+    return all(lst[i] <= lst[i+1] for i in range(len(lst) - 1))
+
 def Partition(lst, left, right):
     """
     >>> lst = [3, 4, 2, 5, 1]
@@ -14,10 +23,12 @@ def Partition(lst, left, right):
     [1, 2, 3, 5, 4]
     """
     key, j = lst[left], left
+
     for i in range(left + 1, right + 1):
         if lst[i] < key:
             j += 1
             lst[j], lst[i] = lst[i], lst[j]
+
     lst[left], lst[j] = lst[j], lst[left]
     return j
 
@@ -35,11 +46,25 @@ def Quick_sort(lst, left, right):
     if left < right:
         key = randint(left, right)
         lst[left], lst[key] = lst[key], lst[left]
+
         mid = Partition(lst, left, right)
+
         Quick_sort(lst, left, mid)
         Quick_sort(lst, mid + 1, right)
+
         return lst
 
+
+fin = open('input.txt', 'r')
+n, lst = fin.readline(), [int(x) for x in fin.readline().split()]
+fin.close()
+
+lst = Quick_sort(lst, 0, len(lst) - 1)
+
+if Sort_check(lst):
+    fout = open('output.txt', 'w')
+    fout.write(' '.join(list(map(str, lst))))
+    fout.close()
 
 print(f'Time: {perf_counter() - timeStart} seconds')
 memoryUsage = getrusage(RUSAGE_SELF).ru_maxrss
