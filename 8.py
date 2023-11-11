@@ -1,5 +1,11 @@
 from random import randint
 from math import sqrt
+from resource import *
+from time import perf_counter
+
+timeStart = perf_counter()
+
+
 def Sort_check(lst):
     """
     >>> Sort_check([1,2,3,4,4])
@@ -8,6 +14,7 @@ def Sort_check(lst):
     False
     """
     return all(lst[i] <= lst[i+1] for i in range(len(lst) - 1))
+
 
 def Partition(lst, left, right):
     """
@@ -47,7 +54,7 @@ def Quick_sort(lst, left, right):
         Quick_sort(lst, left, mid)
         Quick_sort(lst, mid + 1, right)
 
-        return lst
+    return lst
 
 
 fin = open('input.txt')
@@ -61,3 +68,8 @@ ans = [str(lst[i][1]) for i in range(k)]
 fout = open('output.txt', 'w')
 fout.write(','.join(ans))
 fout.close()
+
+print(f'Time: {perf_counter() - timeStart} seconds')
+memoryUsage = getrusage(RUSAGE_SELF).ru_maxrss
+memoryAns = int(format(memoryUsage)) / 1024
+print(f'Memory: {str(memoryAns)} Kbits')

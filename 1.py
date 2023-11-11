@@ -52,7 +52,7 @@ def Quick_sort(lst, left, right):
         Quick_sort(lst, left, mid)
         Quick_sort(lst, mid + 1, right)
 
-        return lst
+    return lst
 
 
 fin = open('input.txt', 'r')

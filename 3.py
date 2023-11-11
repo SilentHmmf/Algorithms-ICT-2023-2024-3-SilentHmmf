@@ -52,7 +52,7 @@ def Quick_sort(lst, left, right):
         Quick_sort(lst, left, mid)
         Quick_sort(lst, mid + 1, right)
 
-        return lst
+    return lst
 
 
 def Scarecrow_sort(lst, k):
@@ -65,7 +65,10 @@ fin = open('input.txt', 'r')
 (n, k), lst = map(int, fin.readline().split()), [int(x) for x in fin.readline().split()]
 fin.close()
 lst = Scarecrow_sort(lst, k)
-print(("НЕТ", "ДА")[Sort_check(lst)])
+
+fout = open('output.txt', 'w')
+fout.write(("НЕТ", "ДА")[Sort_check(lst)])
+fout.close()
 
 print(f'Time: {perf_counter() - timeStart} seconds')
 memoryUsage = getrusage(RUSAGE_SELF).ru_maxrss
